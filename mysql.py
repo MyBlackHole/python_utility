@@ -72,9 +72,9 @@ class MySQLManage(object):
         results = Results()
         try:
             cursor.execute(sql)
-            data = cursor.fetchall()
+            resp = cursor.fetchall()
             results.success = True
-            results.data = data
+            results.resp = resp
         except Exception as e:
             print(e)
         return results
