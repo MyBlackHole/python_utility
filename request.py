@@ -18,8 +18,8 @@ __author__ = 'Black Hole'
 import requests
 from retrying import retry, RetryError
 
-from entity.results import Results
-from error import exception
+from .entity.results import Results
+from .error import exception
 
 
 def post(url: str, **kwargs: dict) -> Results:

@@ -21,16 +21,11 @@ from retrying import RetryError
 def exception(results, error, url):
     if isinstance(error, RetryError):
         results.error = error.args
-        return
     if isinstance(error, ReadTimeout):
         results.error = f'{url} Timeout'
-        return
     if isinstance(error, ConnectionError):
         results.error = f'{url} Connection error'
-        return
     if isinstance(error, RequestException):
         results.error = f'{url} Error'
-        return
     if isinstance(error, Exception):
         results.error = f'{url} {error}'
-        return

@@ -21,3 +21,17 @@ INFO_SRC = {
     'database': 'text',
     'port': 4396
 }
+
+# redis 连接配置表
+redis_info_list = [{"host": "127.0.0.1", "port": 6379}, {"host": "127.0.0.1", "port": 6380},
+                   {"host": "127.0.0.1", "port": 6381}, {"host": "127.0.0.1", "port": 6382},
+                   {"host": "127.0.0.1", "port": 6383}, {"host": "127.0.0.1", "port": 6384}]
+
+# 使用的redis数据量
+SELECT_COUNT = 16
+
+# 程序根目录路径
+BASE_PATH = Path(__file__).parent
+
+# 文档存放路径
+DOCS_PATH = BASE_PATH / 'docs'

@@ -15,14 +15,14 @@
 
 __author__ = 'Black Hole'
 
-import re
+import hashlib
+import math
 import os
+import re
+import threading
 import time
 import uuid
-import math
-import hashlib
-import threading
-from datetime import datetime, timedelta, date
+from datetime import datetime, date
 
 import arrow
 from loguru import logger
@@ -351,3 +351,36 @@ def othor_type(obj):
         return False
     else:
         return True
+
+
+def base_change(n: int, base: int):
+    """
+    10进制转换为任意进制
+    :param n:
+    :param base:
+    :return:
+    """
+    convert_string = "0123456789ABCDEF"
+    if n < base:
+        return convert_string[n]
+    else:
+        return base_change(n // base, base) + convert_string[n % base]
+
+
+def base_change_after(n: int, base: int):
+    ret = base_change(n=n, base=base)
+    after = ret[-1]
+    if after == "F":
+        return 15
+    elif after == "E":
+        return 14
+    elif after == "D":
+        return 13
+    elif after == "C":
+        return 12
+    elif after == "B":
+        return 11
+    elif after == "A":
+        return 10
+    else:
+        return int(after)
