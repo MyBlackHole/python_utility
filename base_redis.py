@@ -20,7 +20,7 @@ import redis
 from pydantic import BaseModel
 from redis import ConnectionPool, Redis
 
-from etc.conf import SELECT_COUNT, redis_info_list
+from .etc.conf import SELECT_COUNT, redis_info_list
 from .base import base_change_after
 
 

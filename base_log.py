@@ -18,7 +18,7 @@ __author__ = 'Black Hole'
 from loguru import logger
 from notifiers.logging import NotificationHandler
 
-from etc.conf import DOCS_PATH
+from .etc.conf import DOCS_PATH
 
 
 class Log(object):

@@ -20,7 +20,7 @@ from retrying import retry, RetryError
 
 from base import iteration_is_none
 from entity.results import Results
-from etc.conf import INFO_SRC
+from .etc.conf import INFO_SRC
 
 LOCALHOST = INFO_SRC
 
