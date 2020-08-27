@@ -97,11 +97,12 @@ def datetime_to_long(date_time):
     try:
         if not isinstance(date_time, datetime):
             return 0
-        strtime = date_time.strftime('%Y-%m-%d %H:%M:%S')
-        time_array = time.strptime(strtime, "%Y-%m-%d %H:%M:%S")
+        str_time = date_time.strftime('%Y-%m-%d %H:%M:%S')
+        time_array = time.strptime(str_time, "%Y-%m-%d %H:%M:%S")
         time_stamp = int(time.mktime(time_array)) * 1000
         return time_stamp
-    except:
+    except Exception as e:
+        logger.info(e)
         return 0
 
 
@@ -119,7 +120,7 @@ def format_date_str(date_str, model=1):
     max_datetime_str = str(datetime.now().year) + '1231235959'
     assert len(date_str) % 2 == 0 and len(date_str) >= 4, '输入的时间格式错误或未指定年份'
     if model >= 0:
-        if len(date_str) < 8 and len(date_str) > 4:
+        if 4 < len(date_str) < 8:
             if date_str[4:6] == '02':
                 if int(date_str[:4]) % 4 == 0:
                     date_str += '29235959'
@@ -156,23 +157,23 @@ def check_contain_chinese(content):
     return False
 
 
-def long_to_datetime(timeStamp):
-    timeStamp = int(timeStamp)
-    if len(str(timeStamp)) == 13:
-        timeStamp = math.floor(timeStamp / 1000)
-    timeArray = time.localtime(timeStamp)
-    otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-    otherStyleTime = datetime.strptime(otherStyleTime, "%Y-%m-%d %H:%M:%S")
-    return otherStyleTime
+def long_to_datetime(time_stamp):
+    time_stamp = int(time_stamp)
+    if len(str(time_stamp)) == 13:
+        time_stamp = math.floor(time_stamp / 1000)
+    time_array = time.localtime(time_stamp)
+    other_style_time = time.strftime("%Y-%m-%d %H:%M:%S", time_array)
+    other_style_time = datetime.strptime(other_style_time, "%Y-%m-%d %H:%M:%S")
+    return other_style_time
 
 
-def read_txt(path, _enconding='utf-8'):
-    file = open(path, 'r+', encoding=_enconding)
+def read_txt(path, _encoding='utf-8'):
+    file = open(path, 'r+', encoding=_encoding)
     lines = file.readlines()
     file.close()
-    tostr = 'amp;'.join(lines)
-    tostr = tostr.replace('\n', '').lstrip('\ufeff')
-    lines = tostr.split('amp;')
+    to_str = 'amp;'.join(lines)
+    to_str = to_str.replace('\n', '').lstrip('\ufeff')
+    lines = to_str.split('amp;')
     return lines
 
 
@@ -237,7 +238,8 @@ def object_to_dict(obj):
     try:
         obj_dict = dict((name, getattr(obj, name)) for name in dir(obj) if not name.startswith('__'))
         return obj_dict
-    except:
+    except Exception as e:
+        logger.info(e)
         return None
 
 
@@ -247,18 +249,20 @@ def str_to_datetime(str_time):
             return str_time
         str_time = str_time.replace('/', '-')
         return datetime.strptime(str_time, '%Y-%m-%d %H:%M:%S')
-    except:
+    except Exception as e:
+        logger.info(e)
         return datetime.strptime('1970-01-01 00:00:00', '%Y-%m-%d %H:%M:%S')
 
 
 def datetime_to_str(date_time, time_str='%Y-%m-%d %H:%M:%S'):
     try:
         return date_time.strftime(time_str)
-    except:
+    except Exception as e:
+        logger.info(e)
         return ''
 
 
-def timedelta_addyear(date_time, add_year):
+def timedelta_add_year(date_time, add_year):
     year = date_time.year
     month = date_time.month
     day = date_time.day
