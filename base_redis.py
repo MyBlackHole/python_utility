@@ -20,8 +20,8 @@ import redis
 from pydantic import BaseModel
 from redis import ConnectionPool, Redis
 
-from .etc.conf import SELECT_COUNT, redis_info_list
 from .base import base_change_after
+from .etc.conf import SELECT_COUNT, redis_info_list
 
 
 class RedisSelect(BaseModel):
@@ -101,7 +101,7 @@ def all_task_count() -> dict:
 def current(func: str, select: dict, *args, **kwargs) -> dict:
     size = {}
     if not hasattr(redis_manage.get_conn(), func):
-        return {"mes": f"没有{func}方法"}
+        raise Exception({"mes": f"没有{func}方法"})
 
     for i in range(redis_manage.instance_count):
 
@@ -135,7 +135,7 @@ def current(func: str, select: dict, *args, **kwargs) -> dict:
                         size[i][j] = resp_new
                     continue
             except Exception as e:
-                return {"mes": f"{e}"}
+                raise Exception({"mes": f"{e}"})
     return size
 
 

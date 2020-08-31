@@ -80,3 +80,7 @@ class Request:
         if not resp.status_code == 200:
             raise RetryError(f' url：{url} 响应码：{resp.status_code} ')
         return resp
+
+
+if __name__ == "__main__":
+    print(get('http://www.baidu.com'))
