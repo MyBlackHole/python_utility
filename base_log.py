@@ -23,6 +23,9 @@ from .etc.conf import DOCS_PATH
 
 class Log(object):
     def __init__(self):
+        """
+        初始化
+        """
         init()
 
 
@@ -32,7 +35,7 @@ def init():
     # 是否开启回溯
     backtrace = True
 
-    rotation = "7 days"
+    rotation = "50 MB"
 
     def info_only(record):
         return record["level"].name == "INFO"

@@ -35,3 +35,4 @@ BASE_PATH = Path(__file__).parent
 
 # 文档存放路径
 DOCS_PATH = BASE_PATH / 'docs'
+print(DOCS_PATH)
