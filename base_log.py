@@ -30,7 +30,7 @@ class Log(object):
 
 
 def init():
-    log_path = CONFIG['DOCS_PATH'] / "log"
+    log_path = CONFIG.DOCS_PATH / "log"
 
     # 是否开启回溯
     backtrace = True
