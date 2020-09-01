@@ -20,9 +20,9 @@ from retrying import retry, RetryError
 
 from .base import iteration_is_none
 from .entity.results import Results
-from .etc.conf import MYSQL_INFO
+from .etc.conf import CONFIG
 
-LOCALHOST = MYSQL_INFO
+LOCALHOST = CONFIG['MYSQL_INFO']
 
 
 def mysql_decorator(func):

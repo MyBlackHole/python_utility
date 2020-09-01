@@ -18,7 +18,7 @@ __author__ = 'Black Hole'
 from loguru import logger
 from notifiers.logging import NotificationHandler
 
-from .etc.conf import DOCS_PATH
+from .etc.conf import CONFIG
 
 
 class Log(object):
@@ -30,7 +30,7 @@ class Log(object):
 
 
 def init():
-    log_path = DOCS_PATH / "log"
+    log_path = CONFIG['DOCS_PATH'] / "log"
 
     # 是否开启回溯
     backtrace = True

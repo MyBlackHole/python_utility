@@ -21,14 +21,14 @@ from pydantic import BaseModel
 from redis import ConnectionPool, Redis
 
 from .base import base_change_after
-from .etc.conf import SELECT_COUNT, REDIS_INFO_LIST
+from .etc.conf import CONFIG, REDIS_INFO_LIST
 
 
 class RedisSelect(BaseModel):
     host: str
     port: int
     select_list: List[ConnectionPool] = []
-    select_count: int = SELECT_COUNT
+    select_count: int = CONFIG['SELECT_COUNT']
 
     class Config:
         arbitrary_types_allowed = True
@@ -60,7 +60,7 @@ class RedisManage(BaseModel):
 
 
 redis_manage = RedisManage()
-redis_manage.init(info_list=REDIS_INFO_LIST)
+redis_manage.init(info_list=CONFIG['REDIS_INFO_LIST'])
 
 
 def redis_conn(index: int = 0, db: int = 0) -> Redis:
