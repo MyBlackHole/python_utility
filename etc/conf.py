@@ -16,7 +16,7 @@ __author__ = 'Black Hole'
 
 from pathlib import Path
 
-INFO_SRC = {
+MYSQL_INFO = {
     'host': '127.0.0.1',
     'user': 'black',
     'password': '123456',
@@ -25,7 +25,7 @@ INFO_SRC = {
 }
 
 # redis 连接配置表
-redis_info_list = [{"host": "127.0.0.1", "port": 6379}]
+REDIS_INFO_LIST = [{"host": "127.0.0.1", "port": 6379}]
 
 # 使用的redis数据量
 SELECT_COUNT = 16
