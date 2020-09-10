@@ -18,13 +18,11 @@ __author__ = 'Black Hole'
 import pymysql
 from retrying import retry, RetryError
 
-from etc.Config import config
 from .base import iteration_is_none
 from .entity.results import Results
+from .etc.conf import CONFIG
 
-# LOCALHOST = CONFIG.MYSQL_INFO
-
-LOCALHOST = config.DB_INFO_SRC
+LOCALHOST = CONFIG.MYSQL_INFO
 
 
 def mysql_decorator(func):
