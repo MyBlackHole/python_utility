@@ -3,7 +3,7 @@
 
 """
 -------------------------------------------------
-   File Name:          error
+   File Name:          base_error
    Description:
    Author:             Black Hole
    date:               2020/7/23
@@ -20,12 +20,22 @@ from retrying import RetryError
 
 def exception(results, error, url):
     if isinstance(error, RetryError):
-        results.error = error.args
+        info = error.args
+        results.error = info
+        raise Exception(error.args)
     if isinstance(error, ReadTimeout):
-        results.error = f'{url} Timeout'
+        info = f'{url} Timeout'
+        results.error = info
+        raise Exception(info)
     if isinstance(error, ConnectionError):
-        results.error = f'{url} Connection error'
+        info = f'{url} Connection error'
+        results.error = info
+        raise Exception(info)
     if isinstance(error, RequestException):
-        results.error = f'{url} Error'
+        info = f'{url} Error'
+        results.error = info
+        raise Exception(info)
     if isinstance(error, Exception):
-        results.error = f'{url} {error}'
+        info = f'{url} {error}'
+        results.error = info
+        raise Exception(info)

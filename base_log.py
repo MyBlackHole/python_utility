@@ -18,21 +18,24 @@ __author__ = 'Black Hole'
 from loguru import logger
 from notifiers.logging import NotificationHandler
 
-from .etc.conf import DOCS_PATH
+from .etc.conf import CONFIG
 
 
 class Log(object):
     def __init__(self):
+        """
+        初始化
+        """
         init()
 
 
 def init():
-    log_path = DOCS_PATH / "log"
+    log_path = CONFIG.DOCS_PATH / "log"
 
     # 是否开启回溯
     backtrace = True
 
-    rotation = "7 days"
+    rotation = "50 MB"
 
     def info_only(record):
         return record["level"].name == "INFO"

@@ -20,15 +20,15 @@ import redis
 from pydantic import BaseModel
 from redis import ConnectionPool, Redis
 
-from .etc.conf import SELECT_COUNT, redis_info_list
 from .base import base_change_after
+from .etc.conf import CONFIG
 
 
 class RedisSelect(BaseModel):
     host: str
     port: int
     select_list: List[ConnectionPool] = []
-    select_count: int = SELECT_COUNT
+    select_count: int = CONFIG.SELECT_COUNT
 
     class Config:
         arbitrary_types_allowed = True
@@ -60,97 +60,12 @@ class RedisManage(BaseModel):
 
 
 redis_manage = RedisManage()
-redis_manage.init(info_list=redis_info_list)
+redis_manage.init(info_list=CONFIG.REDIS_INFO_LIST)
 
 
 def redis_conn(index: int = 0, db: int = 0) -> Redis:
     return redis_manage.get_conn(index=index, db=db)
 
 
-def flush_db() -> str:
-    for i in range(redis_manage.instance_count):
-        for j in range(SELECT_COUNT):
-            redis_manage.get_conn(index=i, db=j).flushdb()
-    return "成功"
-
-
-def db_size() -> dict:
-    size = {}
-    for i in range(redis_manage.instance_count):
-        size[i] = {}
-        for j in range(SELECT_COUNT):
-            resp = redis_manage.get_conn(index=i, db=j).dbsize()
-            if none_or_0(resp):
-                continue
-            size[i][j] = resp
-    return size
-
-
-def all_task_count() -> dict:
-    size = {}
-    for i in range(redis_manage.instance_count):
-        size[i] = {}
-        for j in range(SELECT_COUNT):
-            resp = redis_manage.get_conn(index=i, db=j).llen('task')
-            if none_or_0(resp):
-                continue
-            size[i][j] = resp
-    return size
-
-
-def current(func: str, select: dict, *args, **kwargs) -> dict:
-    size = {}
-    if not hasattr(redis_manage.get_conn(), func):
-        return {"mes": f"没有{func}方法"}
-
-    for i in range(redis_manage.instance_count):
-
-        if select and not select.get(i):
-            continue
-
-        for j in range(SELECT_COUNT):
-            if select and j not in select.get(i):
-                continue
-
-            try:
-                if args == () and kwargs == {}:
-                    resp = getattr(redis_manage.get_conn(index=i, db=j), func)()
-                    resp_new = filter_none(resp)
-                    if resp_new:
-                        size[i] = {}
-                        size[i][j] = resp_new
-                    continue
-                elif args != () and args[0]:
-                    resp = getattr(redis_manage.get_conn(index=i, db=j), func)(*args)
-                    resp_new = filter_none(resp)
-                    if resp_new:
-                        size[i] = {}
-                        size[i][j] = resp_new
-                    continue
-                else:
-                    resp = getattr(redis_manage.get_conn(index=i, db=j), func)(**kwargs)
-                    resp_new = filter_none(resp)
-                    if resp_new:
-                        size[i] = {}
-                        size[i][j] = resp_new
-                    continue
-            except Exception as e:
-                return {"mes": f"{e}"}
-    return size
-
-
-def filter_none(resp: list):
-    resp_new = []
-    for item in resp:
-        if item:
-            resp_new.append(item)
-    return resp_new
-
-
-def none_or_0(resp):
-    if not resp or resp == 0:
-        return True
-
-
 if __name__ == "__main__":
-    print(db_size())
+    print(redis_conn())

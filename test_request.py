@@ -16,7 +16,7 @@ __author__ = 'Black Hole'
 
 import pytest
 
-from request import get
+from .request import get
 
 
 @pytest.mark.parametrize('url', ['http://httpbin.org/', 'https://www.google.com/'])

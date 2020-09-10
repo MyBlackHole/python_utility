@@ -19,7 +19,16 @@ import requests
 from retrying import retry, RetryError
 
 from .entity.results import Results
-from .error import exception
+from .base_er import exception
+
+
+@retry(stop_max_attempt_number=3, stop_max_delay=400, wait_fixed=100)
+def get_check(url: str, check_str: str):
+    results = get(url=url)
+    resp = results.resp
+    if check_str not in resp.text:
+        raise Exception(f"text 不包含{check_str}")
+    return resp.text
 
 
 def post(url: str, **kwargs: dict) -> Results:
@@ -80,3 +89,7 @@ class Request:
         if not resp.status_code == 200:
             raise RetryError(f' url：{url} 响应码：{resp.status_code} ')
         return resp
+
+
+if __name__ == "__main__":
+    print(get('http://www.baidu.com'))

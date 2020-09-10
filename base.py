@@ -30,6 +30,10 @@ from loguru import logger
 mutex = threading.Lock()
 
 
+def get_now_datetime():
+    return datetime.now().replace(microsecond=0)
+
+
 def str_is_none(text: str) -> bool:
     """
     判断 str 是否为 None 或 ''
@@ -61,7 +65,7 @@ def str_to_int(string: [int, str]) -> int:
             return string
         return int(string)
     except Exception as e:
-        logger.exception(f" error：{e} ")
+        logger.info(f" error：{e} ")
         return 0
 
 
@@ -388,3 +392,14 @@ def base_change_after(n: int, base: int):
         return 10
     else:
         return int(after)
+
+
+def gmt_date(created_at):
+    try:
+        create_time = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(created_at, '%a %b %d %H:%M:%S %z %Y'))
+        create_time = datetime.strptime(create_time, '%Y-%m-%d %H:%M:%S')
+    except Exception as e:
+        logger.info(f"gmt_date error:{e}")
+        # create_time = arrow.now().format("YYYY-MM-DD HH:mm:ss")
+        create_time = datetime.strptime('0001-01-01 00:00:00', '%Y-%m-%d %H:%M:%S')
+    return create_time
