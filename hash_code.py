@@ -5,8 +5,6 @@ import jieba.posseg
 from loguru import logger
 from opencc import opencc
 
-from utility.filter import filter_content
-
 
 def is_chinese(title):
     """
@@ -88,7 +86,47 @@ def weibo_hash_code(content):
     return md5.hexdigest()
 
 
+def filter_content(content: str) -> str:
+    # 清除url
+    content = re.sub(r'(https?://|ftp://|file://|www\.)[-A-Za-z0-9+&@#/%?=~_|!:,.; ]+[-A-Za-z0-9+&@#/%=~_|]', '',
+                     content)
+    # 去掉话题 ---- ##
+    content = re.sub(r'#.*?#', '', content)
+
+    # 移除中括号及其内容(大几率是表情) - --- []
+    content = re.sub(r'\[.*?\]', '', content)
+
+    # 去掉括号及其内容 ---- () （） 【】
+    content = re.sub(r'【.*?】|\(.*?\)|（.*?）', '', content)
+
+    # 移除特殊字符 ---- ...全文：
+    content = re.sub(r"\.\.\.全文：", '', content)
+
+    # 清除博文中@的人：
+    # # a. "回复@.*?:"
+    content = re.sub(r"回复@.*?:|回复@.*?：", '', content)
+
+    # # b. "//@.*?:"
+    content = re.sub(r"//@.*?:|//@.*?：", '', content)
+
+    # # c. "@.*?:"
+    content = re.sub(r"@.*?:|@.*?：", '', content)
+
+    # # d. "@.*?\\s"
+    content = re.sub(r"@.*?\s", '', content)
+
+    # # d. "@.*?\\s"
+    content = re.sub(r"@.*?\s", '', content)
+
+    # 清除标点和空格、tab
+    content = re.sub(r"[ \[\]^\-_*×―－()（）$%~!！@#…&￥—+=<>《》?？:：•`·、。，；,.;\"‘’“”-]", '',
+                     content)
+    return content
+
+
 if __name__ == "__main__":
     test_title = "(.*?)（.*?）{.dfk*?}[.*?]【.*?】"
-    test_title = re.sub(r"\((.*?)\)|(（.*?）)|(\{.*?\})|(\[.*?\])|(【.*?】)", "", test_title)  # 清除括号及里面的内容
     print(test_title)
+    text = f'啊啊啊啊，王一博！！ 湿 了 ！！\n你爽，我们也爽了！[awsl]\n\n#这就是街舞# #王一博这就是街舞3# http://t.cn/A6UewHfT'
+    print(text[:14])
+    print(filter_content(text))
