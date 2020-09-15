@@ -16,6 +16,7 @@
 __author__ = 'Black Hole'
 
 import pymysql
+from loguru import logger
 from retrying import retry, RetryError
 
 from .base import iteration_is_none
@@ -76,7 +77,7 @@ class MySQLManage(object):
             results.success = True
             results.resp = resp
         except Exception as e:
-            print(e)
+            logger.info(e)
         return results
 
     def execute(self, sql, conn=None, cursor=None, database_info=None):

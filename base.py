@@ -110,6 +110,10 @@ def datetime_to_long(date_time):
         return 0
 
 
+def datetime_to_long10(date_time: datetime) -> int:
+    return int(datetime_to_long(date_time=date_time) / 1000)
+
+
 # 获取当前时间时间戳
 def get_now_long_time():
     now_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -162,6 +166,14 @@ def check_contain_chinese(content):
 
 
 def long_to_datetime(time_stamp):
+    """
+    时间戳转 "%Y-%m-%d %H:%M:%S"
+    Args:
+        time_stamp: 时间戳
+
+    Returns: str
+
+    """
     time_stamp = int(time_stamp)
     if len(str(time_stamp)) == 13:
         time_stamp = math.floor(time_stamp / 1000)
