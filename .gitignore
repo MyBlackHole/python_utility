@@ -3,6 +3,7 @@
 .idea
 log/
 *.log
+**/fm/
 KeywordService.py
 LoginWeibo.py
 LongWeibo.py
