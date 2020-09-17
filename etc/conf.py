@@ -32,7 +32,11 @@ class BaseConfig(object):
     SELECT_COUNT = 16
 
     # 程序根目录路径
-    BASE_PATH = Path(__file__).parent
+    BASE_PATH = Path(__file__).parent.parent.parent
 
     # 文档存放路径
     DOCS_PATH = BASE_PATH / 'docs'
+
+
+if __name__ == "__main__":
+    print(BaseConfig.BASE_PATH)
