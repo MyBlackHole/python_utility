@@ -391,6 +391,12 @@ def base_change(n: int, base: int):
 
 
 def base_change_after(n: int, base: int):
+    if base == 0:
+        raise Exception(f"base不允许等于{base}")
+
+    if base == 1:
+        return 0
+
     ret = base_change(n=n, base=base)
     after = ret[-1]
     if after == "F":

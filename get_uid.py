@@ -14,11 +14,11 @@ def parse_uid(url):
             'Host': 'weibo.com'
         }
 
-        html = mininet.download_weibo(url, 'CONFIG', need_cookies=True, headers=headers)
+        html = mininet.download_weibo(url, 'BaseConfig', need_cookies=True, headers=headers)
         if str_is_none(html):
             return None
-        mtc = re.search(r"CONFIG\['oid'\]='(\d+)'", html)
-        check = re.search(r"CONFIG\['onick'\]='欢迎新用户'", html)
+        mtc = re.search(r"BaseConfig\['oid'\]='(\d+)'", html)
+        check = re.search(r"BaseConfig\['onick'\]='欢迎新用户'", html)
         if mtc is None:
             return None
         elif check is None:

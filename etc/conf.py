@@ -17,7 +17,7 @@ __author__ = 'Black Hole'
 from pathlib import Path
 
 
-class CONFIG(object):
+class BaseConfig(object):
     MYSQL_INFO = {'host': '127.0.0.1',
                   'user': 'black',
                   'password': '123456',
