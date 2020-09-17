@@ -18,6 +18,7 @@ from pathlib import Path
 
 
 class BaseConfig(object):
+    # mysql 连接配置表
     MYSQL_INFO = {'host': '127.0.0.1',
                   'user': 'black',
                   'password': '123456',
