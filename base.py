@@ -202,8 +202,10 @@ def write_txt(path, content, mod='a+'):
     file.close()
 
 
-def dict_to_object(py_data, obj, obj_dict={}):
+def dict_to_object(py_data, obj, obj_dict=None):
     # py_data = json.loads(json_data)
+    if obj_dict is None:
+        obj_dict = {}
     dic2class(py_data, obj, obj_dict)
     return obj
 
