@@ -354,7 +354,7 @@ def can_json_encoder(old_obj):
     if check_object(obj):
         obj_dict = dict((name, getattr(obj, name)) for name in dir(obj) if not name.startswith('__'))
         obj = can_json_encoder(obj_dict)
-    elif othor_type(obj):
+    elif other_type(obj):
         obj = str(obj)
     return obj
 
@@ -366,7 +366,7 @@ def check_object(obj):
         return False
 
 
-def othor_type(obj):
+def other_type(obj):
     conditions = [datetime, date, int, str, float, list, bool, dict]
     if any(isinstance(obj, c) for c in conditions):
         return False
