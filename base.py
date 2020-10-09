@@ -100,6 +100,16 @@ def get_md5(text):
 # datetime转时间戳
 def datetime_to_long(date_time):
     try:
+        if isinstance(date_time, int):
+            if len(str(date_time)) == 10:
+                return date_time * 1000
+            elif len(str(date_time)) == 13:
+                return date_time
+            elif date_time == 0:
+                return date_time
+            else:
+                raise Exception(f"date_time: {date_time} len: {len(str(date_time))}")
+
         if not isinstance(date_time, datetime):
             return 0
         str_time = date_time.strftime('%Y-%m-%d %H:%M:%S')

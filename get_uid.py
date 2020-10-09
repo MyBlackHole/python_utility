@@ -2,6 +2,7 @@ import re
 
 from loguru import logger
 
+from utility.LongWeibo import long_weibo
 from utility.MiniNetUtility import mininet
 from utility.base import str_is_none
 
@@ -14,7 +15,7 @@ def parse_uid(url):
             'Host': 'weibo.com'
         }
 
-        html = mininet.download_weibo(url, 'BaseConfig', need_cookies=True, headers=headers)
+        html = long_weibo.download_weibo(url, 'BaseConfig', need_cookies=True, headers=headers)
         if str_is_none(html):
             return None
         mtc = re.search(r"BaseConfig\['oid'\]='(\d+)'", html)
