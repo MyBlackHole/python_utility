@@ -22,14 +22,14 @@ from .etc.conf import BaseConfig
 
 
 class Log(object):
-    def __init__(self):
+    def __init__(self, name=None):
         """
         初始化
         """
-        init()
+        init(name=name)
 
 
-def init():
+def init(name: str):
     log_path = BaseConfig.DOCS_PATH / "log"
 
     # 是否开启回溯
@@ -73,7 +73,7 @@ def init():
         "from": "1358244533@qq.com",
         "password": "wettvkqaipkdfgdi",
         "to": ['myisblackhole@163.com'],
-        "subject": "调频",
+        "subject": name,
         "ssl": True
     }
 
