@@ -23,7 +23,7 @@ class BaseConfig(object):
                   'user': 'black',
                   'password': '123456',
                   'database': 'text',
-                  'port': 4396},
+                  'port': 4396}
 
     # redis 连接配置表
     REDIS_INFO_LIST = [{"host": "127.0.0.1", "port": 6379}]

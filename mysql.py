@@ -23,11 +23,10 @@ from .base import iteration_is_none
 from .entity.results import Results
 from .etc.conf import BaseConfig
 
-LOCALHOST = BaseConfig.MYSQL_INFO
-
 
 def mysql_decorator(func):
     def connection(*args, **kwargs):
+        LOCALHOST = BaseConfig.MYSQL_INFO
         database_info = kwargs.get('database_info', LOCALHOST)
         database_info = LOCALHOST if iteration_is_none(database_info) else database_info
         assert all(key in database_info.keys() for key in ['host', 'user', 'password', 'database', 'port']), \
@@ -69,7 +68,7 @@ class MySQLManage(object):
     @mysql_decorator
     @retry(wrap_exception=True, stop_max_attempt_number=stop_max_attempt_number, wait_fixed=wait_fixed,
            stop_max_delay=stop_max_delay)
-    def select(self, sql, conn=None, cursor=None, database_info=None):
+    def select(self, sql: str, conn=None, cursor=None, database_info=None):
         results = Results()
         try:
             cursor.execute(sql)
