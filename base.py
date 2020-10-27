@@ -227,7 +227,10 @@ def dic2class(py_data, obj, obj_dict):
             setattr(obj, name, value)
         else:
             value = getattr(obj, name)
-            setattr(obj, name, set_value(name, value, py_data[name], obj_dict))
+            try:
+                setattr(obj, name, set_value(name, value, py_data[name], obj_dict))
+            except Exception as e:
+                logger.info(e)
 
 
 def set_value(name, value, py_data, obj_dict):
@@ -258,7 +261,6 @@ def set_value(name, value, py_data, obj_dict):
                     py_data) is not None:
                 value = str_to_datetime(py_data)
                 return value
-
         value = py_data
     return value
 
@@ -446,3 +448,7 @@ def clean_file(file_path: Path):
     if not file_path.is_file():
         raise Exception(f"{file_path.resolve()}不是文件")
     pass
+
+
+if __name__ == '__main__':
+    print(get_md5('http://weibo.com/7117188820/Jqojz4yNu'))

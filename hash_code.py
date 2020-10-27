@@ -1,4 +1,5 @@
 import hashlib
+import json
 import re
 
 import jieba.posseg
@@ -80,6 +81,8 @@ def weibo_hash_code(content):
     md5 = hashlib.md5()
     if content:
         try:
+            b = json.dumps(content)
+            content = json.loads(b)
             md5.update(content.encode())
         except Exception as e:
             logger.exception(f" error:{e} ")
