@@ -18,6 +18,7 @@ __author__ = 'Black Hole'
 import hashlib
 import math
 import os
+import pickle
 import re
 import threading
 import time
@@ -448,6 +449,25 @@ def clean_file(file_path: Path):
     if not file_path.is_file():
         raise Exception(f"{file_path.resolve()}不是文件")
     pass
+
+
+def pickle_load(name: str) -> object:
+    with open(name, 'rb') as f:
+        obj = pickle.load(f)
+    return obj
+
+
+def pickle_dump(name: str, obj: object):
+    with open(name, 'wb') as f:
+        pickle.dump(obj, file=f)
+
+
+def delete_dict_none(_dict: dict) -> dict:
+    _list = list(_dict.keys()).copy()
+    for key in _list:
+        if _dict[key] == '':
+            _dict.pop(key)
+    return _dict
 
 
 if __name__ == '__main__':
