@@ -66,19 +66,19 @@ def init(name: str):
                enqueue=True,
                retention="14 days")
 
-    params = {
-        "host": "smtp.qq.com",
-        "port": 465,
-        "username": "1358244533@qq.com",
-        "from": "1358244533@qq.com",
-        "password": "wettvkqaipkdfgdi",
-        "to": ['myisblackhole@163.com'],
-        "subject": name,
-        "ssl": True
-    }
+    # params = {
+    #     "host": "smtp.qq.com",
+    #     "port": 465,
+    #     "username": "1358244533@qq.com",
+    #     "from": "1358244533@qq.com",
+    #     "password": "wettvkqaipkdfgdi",
+    #     "to": ['myisblackhole@163.com'],
+    #     "subject": name,
+    #     "ssl": True
+    # }
 
-    handler = NotificationHandler("email", defaults=params)
-    logger.add(handler, filter=error_only)
+    # handler = NotificationHandler("email", defaults=params)
+    # logger.add(handler, filter=error_only)
 
 
 if __name__ == '__main__':
