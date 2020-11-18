@@ -26,8 +26,10 @@ import time
 import uuid
 from datetime import datetime, date
 from pathlib import Path
+from urllib import parse
 
 import arrow
+import psutil
 from loguru import logger
 
 mutex = threading.Lock()
@@ -482,5 +484,57 @@ def get_list(name: str) -> list:
     return _list
 
 
+def run_project(cmd: list, cwd: str = '.') -> int:
+    return psutil.Popen([*cmd], cwd=cwd, creationflags=16).pid
+
+
+def wait_pid_end(pid: int):
+    while psutil.pid_exists(pid=pid):
+        time.sleep(3)
+
+
+def dumps(path: Path, data: [list, dict, str]):
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write(json.dumps(data, ensure_ascii=False))
+
+
+def loads(path: Path) -> [list, dict, str]:
+    with open(path, 'r', encoding='utf-8') as f:
+        text = f.read()
+        if not text:
+            return {}
+        return json.loads(text)
+
+
+def kill_pid(_pid):
+    if _pid != 0:
+        os.system(f'taskkill /F /PID {_pid}')
+
+
+def git_clone(username: str, password: str, url: str, cwd: str = '..') -> int:
+    _url = re.search(r'://(.*)', url).group(1)
+    username = parse.quote(username)
+    password = parse.quote(password)
+    git_url = f'http://{username}:{password}@{_url}'
+    cmd = ['git', 'clone', git_url]
+    return run_project(cmd, cwd=cwd)
+
+
+def git_pull(cwd: str):
+    cmd = ['git', 'pull']
+    return run_project(cmd, cwd=cwd)
+
+
 if __name__ == '__main__':
-    print(get_md5('http://weibo.com/7124490197/Jub6ZqVHn'))
+    # git_pull(cwd=r'C:\Users\BlackHole\PycharmProjects\ProjectManage\PyWeiboCrawler')
+    # print(get_md5('http://weibo.com/7117188820/Jqojz4yNu'))
+    # psutil.Popen(
+    #     ['git', 'clone', 'http://1358244533%40qq.com:1358244533@14.23.114.74:3000/wudinggao/PyWeiboCrawler.git'],
+    #     creationflags=16)
+    # run_project(cmd=['git',
+    #                  'clone', 'http://1358244533%40qq.com:1358244533@14.23.114.74:3000/wudinggao/PyWeiboCrawler.git'])
+    # time.sleep(10)
+    # print(loads(Path('../docs/client_json.json')))
+    # kill_pid(5)
+    kill_pid(22448)
+    print('ok')
