@@ -56,7 +56,7 @@ def post(url: str, **kwargs: dict) -> Results:
         results.resp = resp
         results.success = True
     except Exception as e:
-        exception(results=results, error=e, url=url)
+        exception(results=results, error=e, info=url)
     return results
 
 
@@ -76,7 +76,7 @@ def get(url: str, **kwargs: dict):
         results.resp = resp
         results.success = True
     except Exception as e:
-        exception(results=results, error=e, url=url)
+        exception(results=results, error=e, info=url)
     return results
 
 

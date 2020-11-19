@@ -16,10 +16,10 @@
 __author__ = 'Black Hole'
 
 import pymysql
-from loguru import logger
-from retrying import retry, RetryError
+from retrying import retry
 
 from .base import iteration_is_none
+from .base_er import exception
 from .entity.results import Results
 from .etc.conf import BaseConfig
 
@@ -65,18 +65,14 @@ class MySQLManage(object):
             cls.mysql_utility = object.__new__(cls, *args, **kwargs)
         return cls.mysql_utility
 
-    @mysql_decorator
-    @retry(wrap_exception=True, stop_max_attempt_number=stop_max_attempt_number, wait_fixed=wait_fixed,
-           stop_max_delay=stop_max_delay)
     def select(self, sql: str, conn=None, cursor=None, database_info=None):
         results = Results()
         try:
-            cursor.execute(sql)
-            resp = cursor.fetchall()
+            results.resp = self._execute_db("execute", sql, conn=conn,
+                                            cursor=cursor, fetchall=True, database_info=database_info)
             results.success = True
-            results.resp = resp
         except Exception as e:
-            logger.info(e)
+            exception(results=results, error=e, info=sql)
         return results
 
     def execute(self, sql, conn=None, cursor=None, database_info=None):
@@ -85,8 +81,8 @@ class MySQLManage(object):
             results.resp = self._execute_db("execute", sql, conn=conn,
                                             cursor=cursor, database_info=database_info)
             results.success = True
-        except RetryError as e:
-            results.error = e.args[0].value
+        except Exception as e:
+            exception(results=results, error=e, info=sql)
         return results
 
     def executemany(self, sql, data, conn=None, cursor=None, database_info=None):
@@ -95,14 +91,17 @@ class MySQLManage(object):
             results.resp = self._execute_db("executemany", sql, data, conn=conn,
                                             cursor=cursor, database_info=database_info)
             results.success = True
-        except RetryError as e:
-            results.error = e.args[0].value
+        except Exception as e:
+            exception(results=results, error=e, info=sql)
         return results
 
     @mysql_decorator
-    @retry(wrap_exception=True, stop_max_attempt_number=stop_max_attempt_number, wait_fixed=5000,
+    @retry(stop_max_attempt_number=stop_max_attempt_number, wait_fixed=5000,
            stop_max_delay=stop_max_delay)
-    def _execute_db(self, func, *args, conn=None, cursor=None, database_info=None):
+    def _execute_db(self, func: str, *args, conn=None, cursor=None, fetchall: bool = False, database_info=None):
         rows = getattr(cursor, func)(*args)
-        conn.commit()
+        if fetchall:
+            rows = cursor.fetchall()
+        else:
+            conn.commit()
         return rows
