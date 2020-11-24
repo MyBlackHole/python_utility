@@ -14,28 +14,35 @@
 
 __author__ = 'Black Hole'
 
+from pymysql import ProgrammingError
 from requests.exceptions import ReadTimeout, ConnectionError, RequestException
 from retrying import RetryError
 
+from .entity.results import Results
 
-def exception(results, error, url):
-    if isinstance(error, RetryError):
-        info = error.args
+
+def exception(results: Results, error, info):
+    if isinstance(error, ProgrammingError):
+        info = f"{info} {error.args}"
         results.error = info
-        raise Exception(error.args)
-    if isinstance(error, ReadTimeout):
-        info = f'{url} Timeout'
+        raise Exception(results.dumps())
+    elif isinstance(error, RetryError):
+        info = f"{info} {error.args}"
         results.error = info
-        raise Exception(info)
-    if isinstance(error, ConnectionError):
-        info = f'{url} Connection error'
+        raise Exception(results.dumps())
+    elif isinstance(error, ReadTimeout):
+        info = f'{info} Timeout'
         results.error = info
-        raise Exception(info)
-    if isinstance(error, RequestException):
-        info = f'{url} Error'
+        raise Exception(results.dumps())
+    elif isinstance(error, ConnectionError):
+        info = f'{info} Connection error'
         results.error = info
-        raise Exception(info)
-    if isinstance(error, Exception):
-        info = f'{url} {error}'
+        raise Exception(results.dumps())
+    elif isinstance(error, RequestException):
+        info = f'{info} Error'
         results.error = info
-        raise Exception(info)
+        raise Exception(results.dumps())
+    else:
+        info = f'{info} {error}'
+        results.error = info
+        raise Exception(results.dumps())

@@ -437,7 +437,6 @@ def gmt_date(created_at):
         create_time = datetime.strptime(create_time, '%Y-%m-%d %H:%M:%S')
     except Exception as e:
         logger.info(f"gmt_date error:{e}")
-        # create_time = arrow.now().format("YYYY-MM-DD HH:mm:ss")
         create_time = datetime.strptime('0001-01-01 00:00:00', '%Y-%m-%d %H:%M:%S')
     return create_time
 
@@ -471,6 +470,18 @@ def delete_dict_none(_dict: dict) -> dict:
         if _dict[key] == '':
             _dict.pop(key)
     return _dict
+
+
+def read_text(file: str, mode: str = 'r', encoding: str = 'utf-8') -> [str, bytes]:
+    with open(file, mode, encoding=encoding) as f:
+        text = f.read()
+    return text
+
+
+def get_list(name: str) -> list:
+    _str = read_text(name)
+    _list = json.loads(_str)
+    return _list
 
 
 def run_project(cmd: list, cwd: str = '.') -> int:
