@@ -39,6 +39,7 @@ class BaseConfig(object):
     # 文档存放路径
     DOCS_PATH = BASE_PATH / 'docs'
 
+    # 添加运行环境、启动环境
     sys.path.append(BASE_PATH)
     os.chdir(BASE_PATH)
 

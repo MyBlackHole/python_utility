@@ -36,7 +36,7 @@ def get_now_datetime() -> datetime:
     Returns: 2020-11-24 14:51:32.589053+08:00
     Class: <class 'datetime.datetime'>
     """
-    return arrow.now().datetime
+    return arrow.now().naive
 
 
 def long10_to_datetime(time_stamp):
@@ -50,7 +50,7 @@ def long10_to_datetime(time_stamp):
     Class: <class 'datetime.datetime'>
 
     """
-    return arrow.get(time_stamp, tzinfo='local').datetime
+    return arrow.get(time_stamp, tzinfo='local').naive
 
 
 def long13_to_datetime(time_stamp):
@@ -99,5 +99,6 @@ def print_type(obj: object):
 
 
 if __name__ == '__main__':
-    print_type(long13_to_format(1606196547823))
+    if datetime.now() < arrow.now().naive:
+        print(1)
     pass
