@@ -14,6 +14,8 @@
 
 __author__ = 'Black Hole'
 
+import os
+import sys
 from pathlib import Path
 
 
@@ -36,6 +38,9 @@ class BaseConfig(object):
 
     # 文档存放路径
     DOCS_PATH = BASE_PATH / 'docs'
+
+    sys.path.append(BASE_PATH)
+    os.chdir(BASE_PATH)
 
 
 if __name__ == "__main__":

@@ -16,7 +16,6 @@
 __author__ = 'Black Hole'
 
 from loguru import logger
-from notifiers.logging import NotificationHandler
 
 from .etc.conf import BaseConfig
 
@@ -66,25 +65,8 @@ def init(name: str):
                enqueue=True,
                retention="14 days")
 
-    # params = {
-    #     "host": "smtp.qq.com",
-    #     "port": 465,
-    #     "username": "1358244533@qq.com",
-    #     "from": "1358244533@qq.com",
-    #     "password": "wettvkqaipkdfgdi",
-    #     "to": ['myisblackhole@163.com'],
-    #     "subject": name,
-    #     "ssl": True
-    # }
-
-    # handler = NotificationHandler("email", defaults=params)
-    # logger.add(handler, filter=error_only)
-
 
 if __name__ == '__main__':
-    # # 测试用
-    # notifier = notifiers.get_notifier("email")
-    # notifier.notify(message="The application is running!", **params)
     logger.info("中文test")
     logger.debug("中文test")
     logger.warning("中文test")
