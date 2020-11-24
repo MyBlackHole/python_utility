@@ -28,7 +28,6 @@ from datetime import datetime, date
 from pathlib import Path
 from urllib import parse
 
-import arrow
 import psutil
 from loguru import logger
 
@@ -49,14 +48,6 @@ def str_is_none(text: str) -> bool:
         return True
     else:
         return False
-
-
-def get_now_date() -> str:
-    """
-    '2020-05-27 15:08:22'
-    :return: str
-    """
-    return arrow.now().format("YYYY-MM-DD HH:mm:ss")
 
 
 def str_to_int(string: [int, str]) -> int:
@@ -536,5 +527,5 @@ if __name__ == '__main__':
     # time.sleep(10)
     # print(loads(Path('../docs/client_json.json')))
     # kill_pid(5)
-    kill_pid(22448)
-    print('ok')
+    # kill_pid(22448)
+    print(get_now_datetime())
