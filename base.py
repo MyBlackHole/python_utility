@@ -471,6 +471,8 @@ def read_text(file: str, mode: str = 'r', encoding: str = 'utf-8') -> [str, byte
 
 def get_list(name: str) -> list:
     _str = read_text(name)
+    if not _str:
+        return []
     _list = json.loads(_str)
     return _list
 
@@ -482,19 +484,6 @@ def run_project(cmd: list, cwd: str = '.') -> int:
 def wait_pid_end(pid: int):
     while psutil.pid_exists(pid=pid):
         time.sleep(3)
-
-
-def dumps(path: Path, data: [list, dict, str]):
-    with open(path, 'w', encoding='utf-8') as f:
-        f.write(json.dumps(data, ensure_ascii=False))
-
-
-def loads(path: Path) -> [list, dict, str]:
-    with open(path, 'r', encoding='utf-8') as f:
-        text = f.read()
-        if not text:
-            return {}
-        return json.loads(text)
 
 
 def kill_pid(_pid):

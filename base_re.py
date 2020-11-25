@@ -35,14 +35,18 @@ def is_chinese(_str: str) -> bool:
 
 def is_un_chinese(_str: str) -> bool:
     """
-    是否包含中文
+    是否包含非中文
     Args:
         _str: 判定字符串
     Input: "我"
     Returns: False
     Class: <class 'bool'>
     """
-    return not is_chinese(_str=_str)
+    pattern = re.compile(r'[^\u4e00-\u9fa5]')
+    chinese = re.search(pattern, _str)
+    if chinese:
+        return True
+    return False
 
 
 if __name__ == '__main__':
