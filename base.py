@@ -517,4 +517,6 @@ if __name__ == '__main__':
     # print(loads(Path('../docs/client_json.json')))
     # kill_pid(5)
     # kill_pid(22448)
-    print(get_now_datetime())
+    # print(get_now_datetime())
+    print(gmt_date("Thu Nov 26 13:16:15 +0800 2020"))
+    print(type(gmt_date("Thu Nov 26 13:16:15 +0800 2020")))

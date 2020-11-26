@@ -93,12 +93,23 @@ def long13_to_format(time_stamp):
     return long10_to_format(time_stamp=time_stamp)
 
 
+def chinese_to_gmt(chinese_time: str) -> datetime:
+    """
+    中国时间转格林时间
+    Args:
+        chinese_time: 中国时间
+    Input: Thu Nov 26 13:16:15 +0800 2020
+    Returns: 2020-11-26 13:16:15
+    Class: <class 'datetime.datetime'>
+    """
+    return arrow.get(chinese_time, 'ddd MMM DD HH:mm:ss Z YYYY', tzinfo='local').naive
+
+
 def print_type(obj: object):
     print(obj)
     print(type(obj))
 
 
 if __name__ == '__main__':
-    if datetime.now() < arrow.now().naive:
-        print(1)
+    print_type(chinese_to_gmt('Thu Nov 26 13:16:15 +0800 2020'))
     pass
