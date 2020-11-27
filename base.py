@@ -519,4 +519,4 @@ if __name__ == '__main__':
     # kill_pid(22448)
     # print(get_now_datetime())
     print(gmt_date("Thu Nov 26 13:16:15 +0800 2020"))
-    print(type(gmt_date("Thu Nov 26 13:16:15 +0800 2020")))
+    print(type(long_to_datetime("Thu Nov 26 13:16:15 +0800 2020")))
