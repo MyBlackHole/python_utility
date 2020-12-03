@@ -4,11 +4,11 @@
 log/
 *.log
 **/fm/
-KeywordService.py
+weibo_utility/keyword_service.py
 LoginWeibo.py
 LongWeibo.py
 MiniNetUtility.py
-NetServer.py
+net_server.py
 WeiboLog.py
 WeiboParse.py
 WeiboUtility.py
@@ -18,3 +18,4 @@ weibojudgment.py
 taskutility.py
 filter.py
 base_weibo.py
+**/weibo_utility/
