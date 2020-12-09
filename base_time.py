@@ -39,26 +39,6 @@ def get_now_datetime() -> datetime:
     return arrow.now().naive
 
 
-def get10_now_timestamp() -> int:
-    """
-    获取当前时间戳
-
-    Returns: 2020-11-24 14:51:32.589053+08:00
-    Class: <class 'datetime.datetime'>
-    """
-    return arrow.now().timestamp
-
-
-def get13_now_timestamp() -> int:
-    """
-    获取当前时间戳
-
-    Returns: 2020-11-24 14:51:32.589053+08:00
-    Class: <class 'datetime.datetime'>
-    """
-    return get10_now_timestamp() * 1000
-
-
 def long10_to_datetime(time_stamp):
     """
     获取 time_stamp 对应的 datetime
@@ -131,5 +111,5 @@ def print_type(obj: object):
 
 
 if __name__ == '__main__':
-    print_type(get10_now_timestamp())
+    print_type(chinese_to_gmt('Thu Nov 26 13:16:15 +0800 2020'))
     pass

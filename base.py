@@ -320,6 +320,29 @@ def fill_datetime(year, month, day, hour, minute, second):
     return '{0}-{1}-{2} {3}:{4}:{5}'.format(year, month, day, hour, minute, second)
 
 
+def index_of_str(s1, s2, start_index=0):
+    new_s1 = s1[start_index:]
+    n1 = len(new_s1)
+    n2 = len(s2)
+    for i in range(n1 - n2 + 1):
+        if new_s1[i:i + n2] == s2:
+            return i + start_index
+    else:
+        return -1
+
+
+def last_index(s1, s2):
+    new_s1 = s1[::-1]
+    new_s2 = s2[::-1]
+    n1 = len(s1)
+    n2 = len(s2)
+    for i in range(n1 - n2 + 1):
+        if new_s1[i:i + n2] == new_s2:
+            return i
+    else:
+        return -1
+
+
 def can_json_encoder(old_obj):
     obj = old_obj
     if isinstance(obj, datetime):

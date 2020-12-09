@@ -87,7 +87,3 @@ def get_nick_name_by_index(text):
 
 def jb_parse_keywords(count: int, text: str):
     return ' '.join(jieba.analyse.textrank(text, topK=count))
-
-
-if __name__ == '__main__':
-    print(jb_parse_keywords(10, "买好 \u200b"), 1)
