@@ -16,11 +16,18 @@ __author__ = 'Black Hole'
 
 import hashlib
 import json
-import re
+import uuid
 
 import jieba.posseg
 from loguru import logger
 from opencc import opencc
+
+
+def get_uuid3(_str: str) -> str:
+    """
+    获取某关键字为基础的 uuid3
+    """
+    return str(uuid.uuid3(uuid.NAMESPACE_DNS, _str)).replace("-", "")
 
 
 def is_chinese(title):
@@ -162,6 +169,7 @@ lor:#f2f2f2;padding-top:48.39650145772595%;\" />\u003c/p>\u003cp>岛内网友评
 己不会去查吗？”“新加坡：与死亡无关，停用；台湾：与死亡无关，继续！你选择哪一个？”\u003c/p>"""
     text = text.encode().decode()
     import re
+
     # p = re.findall(r'(<img.*?/>)', text, re.DOTALL)
     # text = re.search(r'(<img.*/>)', text, re.DOTALL)
     s = re.compile(r'(<img.*?/>)', re.DOTALL)

@@ -41,7 +41,7 @@ def get_now_datetime() -> datetime:
 
 def long10_to_datetime(time_stamp):
     """
-    获取 time_stamp 对应的 datetime
+    获取 time_stamp(10 位) 对应的 datetime
     Args:
         time_stamp: 时间戳
 
@@ -55,7 +55,7 @@ def long10_to_datetime(time_stamp):
 
 def long13_to_datetime(time_stamp):
     """
-    获取 time_stamp 对应的 datetime
+    获取 time_stamp(13 位) 对应的 datetime
     Args:
         time_stamp: 时间戳
 
@@ -72,7 +72,7 @@ def long10_to_format(time_stamp):
     """
     时间戳转 str
     Args:
-        time_stamp: 时间戳
+        time_stamp: 10 位时间戳
     Input: 1606196547
     Returns: 2020-11-24 13:42:27
     Class: <class 'str'>
@@ -84,7 +84,7 @@ def long13_to_format(time_stamp):
     """
     时间戳转 str
     Args:
-        time_stamp: 时间戳
+        time_stamp: 13 位时间戳
     Input: 1606196547
     Returns: 2020-11-24 13:42:27
     Class: <class 'str'>
@@ -103,6 +103,30 @@ def chinese_to_gmt(chinese_time: str) -> datetime:
     Class: <class 'datetime.datetime'>
     """
     return arrow.get(chinese_time, 'ddd MMM DD HH:mm:ss Z YYYY', tzinfo='local').naive
+
+
+def chinese_to_timestamp10(chinese_time: str) -> int:
+    """
+    中国时间转 10 位时间戳
+    Args:
+        chinese_time: 中国时间
+    Input: Thu Nov 26 13:16:15 +0800 2020
+    Returns: 1606196547
+    Class: <class 'int'>
+    """
+    return arrow.get(chinese_time, 'ddd MMM DD HH:mm:ss Z YYYY', tzinfo='local').timestamp
+
+
+def chinese_to_timestamp13(chinese_time: str) -> int:
+    """
+    中国时间转 13 位时间戳
+    Args:
+        chinese_time: 中国时间
+    Input: Thu Nov 26 13:16:15 +0800 2020
+    Returns: 1606196547000
+    Class: <class 'int'>
+    """
+    return chinese_to_timestamp10(chinese_time=chinese_time) * 1000
 
 
 def print_type(obj: object):

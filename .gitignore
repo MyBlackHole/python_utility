@@ -4,11 +4,18 @@
 log/
 *.log
 **/fm/
-KeywordService.py
+<<<<<<< HEAD
+key_word.py
 LoginWeibo.py
 LongWeibo.py
 MiniNetUtility.py
 NetServer.py
+=======
+weibo_utility/keyword_service.py
+LongWeibo.py
+MiniNetUtility.py
+weibo_utility/net_server.py
+>>>>>>> d7bb4d8a63ad260accafcbf77c2847b22f603003
 WeiboLog.py
 WeiboParse.py
 WeiboUtility.py
@@ -17,4 +24,9 @@ UniqueQueue.py
 weibojudgment.py
 taskutility.py
 filter.py
+<<<<<<< HEAD
 base_weibo.py
+=======
+weibo_utility/base_weibo.py
+**/weibo_utility/
+>>>>>>> d7bb4d8a63ad260accafcbf77c2847b22f603003

@@ -68,4 +68,4 @@ def redis_conn(index: int = 0, db: int = 0) -> Redis:
 
 
 if __name__ == "__main__":
-    print(redis_conn())
+    pass

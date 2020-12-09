@@ -16,10 +16,10 @@
 __author__ = 'Black Hole'
 
 import requests
-from retrying import retry, RetryError
+from retrying import retry
 
+from .base_er import exception, LogException
 from .entity.results import Results
-from .base_er import exception
 
 
 @retry(stop_max_attempt_number=3, stop_max_delay=400, wait_fixed=100)
@@ -56,7 +56,7 @@ def post(url: str, **kwargs: dict) -> Results:
         results.resp = resp
         results.success = True
     except Exception as e:
-        exception(results=results, error=e, info=url)
+        return exception(results=results, error=e, info=url)
     return results
 
 
@@ -76,7 +76,7 @@ def get(url: str, **kwargs: dict):
         results.resp = resp
         results.success = True
     except Exception as e:
-        exception(results=results, error=e, info=url)
+        return exception(results=results, error=e, info=url)
     return results
 
 
@@ -96,7 +96,7 @@ class Request:
         # }
         resp = getattr(requests, method)(url=url, **kwargs)
         if not resp.status_code == 200:
-            raise RetryError(f' url：{url} 响应码：{resp.status_code} ')
+            raise LogException(url=url, status_code=resp.status_code, body=resp.text)
         return resp
 
 
