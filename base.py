@@ -87,6 +87,10 @@ def get_uuid() -> str:
     return uuid_str
 
 
+def get_uuid3(_str: str) -> str:
+    return str(uuid.uuid3(uuid.NAMESPACE_DNS, _str)).replace("-", "")
+
+
 def get_md5(text):
     sign = hashlib.md5(text.encode(encoding='UTF-8')).hexdigest()
     return sign

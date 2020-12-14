@@ -34,3 +34,7 @@ class TextRemover(TextRemover):
 
 class DoNetUtility(DoNetUtility):
     pass
+
+
+if __name__ == '__main__':
+    print(1)

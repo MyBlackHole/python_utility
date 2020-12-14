@@ -48,4 +48,3 @@ class BaseConfig(object):
 if __name__ == "__main__":
     print(BaseConfig.BASE_PATH)
     print(type(BaseConfig.BASE_PATH))
-    pass
