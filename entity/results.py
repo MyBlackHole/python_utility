@@ -15,37 +15,38 @@
 
 from typing import Union
 
-import cattr
-from attr import attrs, attrib
+from pydantic import BaseModel, validator
 from requests.models import Response
 
 resp_type = Union[Response, tuple, int, None]
 error_type = Union[tuple, str, None]
 
 
-@attrs
-class Results(object):
+class Results(BaseModel):
     # 状态
     # success: bool = False
-    success = attrib(type=bool, default=False)
+    success: bool = False
 
     # 异常信息
     # error: error_type = None
-    error = attrib(type=error_type, default=None)
+    error: error_type = None
+
+    # 状态码
+    status_code: int = -1
 
     # 请求响应
     # resp: resp_type = None
-    resp = attrib(type=resp_type, default=None)
+    resp: resp_type = None
 
-    def dumps(self):
-        return cattr.unstructure(self)
+    # url等
+    info: str = None
 
-    # def loads(self, _dict):
-    #     return cattr.structure(_dict, self.__class__)
+    class Config:
+        arbitrary_types_allowed = True
 
 
 if __name__ == '__main__':
+    print(Results().json())
+    pass
     # print(Results(success=True))
-    _dict = cattr.unstructure(Results())
     # print(Results())
-    print(Results(**_dict))

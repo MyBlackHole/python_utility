@@ -72,7 +72,7 @@ class MySQLManage(object):
                                             cursor=cursor, fetchall=True, database_info=database_info)
             results.success = True
         except Exception as e:
-            exception(results=results, error=e, info=sql)
+            return exception(results=results, error=e, info=sql)
         return results
 
     def execute(self, sql, conn=None, cursor=None, database_info=None):
@@ -82,7 +82,7 @@ class MySQLManage(object):
                                             cursor=cursor, database_info=database_info)
             results.success = True
         except Exception as e:
-            exception(results=results, error=e, info=sql)
+            return exception(results=results, error=e, info=sql)
         return results
 
     def executemany(self, sql, data, conn=None, cursor=None, database_info=None):
@@ -92,7 +92,7 @@ class MySQLManage(object):
                                             cursor=cursor, database_info=database_info)
             results.success = True
         except Exception as e:
-            exception(results=results, error=e, info=sql)
+            return exception(results=results, error=e, info=sql)
         return results
 
     @mysql_decorator

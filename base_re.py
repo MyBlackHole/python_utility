@@ -68,19 +68,5 @@ def get_from(url: str) -> str:
         return ''
 
 
-def del_prefix(content):
-    """
-    清除@对象
-    :param content: 文本
-    :return: str
-    """
-    for i in range(10):
-        content_len = len(content)
-        content = re.sub('^//@(.*?) ?: ?', '', content)
-        if len(content) >= content_len:
-            break
-    return content
-
-
 if __name__ == '__main__':
     print(is_un_chinese("0"))

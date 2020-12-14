@@ -39,29 +39,9 @@ def get_now_datetime() -> datetime:
     return arrow.now().naive
 
 
-def get10_now_timestamp() -> int:
-    """
-    获取当前时间戳
-
-    Returns: 2020-11-24 14:51:32.589053+08:00
-    Class: <class 'datetime.datetime'>
-    """
-    return arrow.now().timestamp
-
-
-def get13_now_timestamp() -> int:
-    """
-    获取当前时间戳
-
-    Returns: 2020-11-24 14:51:32.589053+08:00
-    Class: <class 'datetime.datetime'>
-    """
-    return get10_now_timestamp() * 1000
-
-
 def long10_to_datetime(time_stamp):
     """
-    获取 time_stamp 对应的 datetime
+    获取 time_stamp(10 位) 对应的 datetime
     Args:
         time_stamp: 时间戳
 
@@ -75,7 +55,7 @@ def long10_to_datetime(time_stamp):
 
 def long13_to_datetime(time_stamp):
     """
-    获取 time_stamp 对应的 datetime
+    获取 time_stamp(13 位) 对应的 datetime
     Args:
         time_stamp: 时间戳
 
@@ -92,7 +72,7 @@ def long10_to_format(time_stamp):
     """
     时间戳转 str
     Args:
-        time_stamp: 时间戳
+        time_stamp: 10 位时间戳
     Input: 1606196547
     Returns: 2020-11-24 13:42:27
     Class: <class 'str'>
@@ -104,7 +84,7 @@ def long13_to_format(time_stamp):
     """
     时间戳转 str
     Args:
-        time_stamp: 时间戳
+        time_stamp: 13 位时间戳
     Input: 1606196547
     Returns: 2020-11-24 13:42:27
     Class: <class 'str'>
@@ -125,11 +105,35 @@ def chinese_to_gmt(chinese_time: str) -> datetime:
     return arrow.get(chinese_time, 'ddd MMM DD HH:mm:ss Z YYYY', tzinfo='local').naive
 
 
+def chinese_to_timestamp10(chinese_time: str) -> int:
+    """
+    中国时间转 10 位时间戳
+    Args:
+        chinese_time: 中国时间
+    Input: Thu Nov 26 13:16:15 +0800 2020
+    Returns: 1606196547
+    Class: <class 'int'>
+    """
+    return arrow.get(chinese_time, 'ddd MMM DD HH:mm:ss Z YYYY', tzinfo='local').timestamp
+
+
+def chinese_to_timestamp13(chinese_time: str) -> int:
+    """
+    中国时间转 13 位时间戳
+    Args:
+        chinese_time: 中国时间
+    Input: Thu Nov 26 13:16:15 +0800 2020
+    Returns: 1606196547000
+    Class: <class 'int'>
+    """
+    return chinese_to_timestamp10(chinese_time=chinese_time) * 1000
+
+
 def print_type(obj: object):
     print(obj)
     print(type(obj))
 
 
 if __name__ == '__main__':
-    print_type(get10_now_timestamp())
+    print_type(chinese_to_gmt('Thu Nov 26 13:16:15 +0800 2020'))
     pass
