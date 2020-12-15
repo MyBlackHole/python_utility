@@ -31,6 +31,7 @@ from urllib import parse
 import psutil
 from loguru import logger
 
+# 线程锁
 mutex = threading.Lock()
 
 
