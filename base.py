@@ -489,7 +489,6 @@ def git_pull(cwd: str):
 
 
 if __name__ == '__main__':
-    # git_pull(cwd=r'C:\Users\BlackHole\PycharmProjects\ProjectManage\PyWeiboCrawler')
     # print(get_md5('http://weibo.com/7117188820/Jqojz4yNu'))
     # psutil.Popen(
     #     ['git', 'clone', 'http://1358244533%40qq.com:1358244533@14.23.114.74:3000/wudinggao/PyWeiboCrawler.git'],

@@ -18,6 +18,7 @@ import hashlib
 import json
 import uuid
 
+import re
 import jieba.posseg
 from loguru import logger
 from opencc import opencc
@@ -152,23 +153,8 @@ def filter_content(content: str) -> str:
 
 if __name__ == "__main__":
     test_title = "(.*?)（.*?）{.dfk*?}[.*?]【.*?】"
-    text = f"""\u003cp>\u003cstrong>\u003cimg src=\"https://x0.ifengimg.com/res/2020/B242CB0FC2609B82826B76E125C5AEA350
-89F0B5_size252_w799_h555.png\" />\u003c/strong>\u003c/p>\u003cp>截至26日零时，韩国今年秋季接种流感疫苗后死亡的人数已经增
-至59人，台湾地区也报道51例接种疫苗后出现的不良反应，案例中就有与韩国接种后出现死亡的疫苗同款。对此，台湾卫生福利主管部门负责人陈时中草草回应，台
-湾疫苗不良反应报告并未异常，没有考虑停打，岛内网友痛批“冷血官僚”“请陈时中带头吃美猪与施打赛诺菲疫苗”！\u003c/p>\u003cp>据台湾联合新闻网报道，
-台湾台中市51岁男子于10月10日打了流感疫苗10天后，出现急性多发性神经炎（GBS格林巴利症候群）病危，而这名男子与日前传出疑似流感疫苗致心肌炎不良反应个
-案都是打了赛诺菲疫苗。截至目前，台湾已经出现51例接种疫苗后出现的不良反应，有12例属严重不良反应。\u003c/p>\u003cp>值得一提的是，韩国免费接种计
-划采用的流感疫苗由五家制药企业供应，分别为法国赛诺菲集团、本土的GC制药公司、SK生物科技、一洋药品公司以及英国葛兰素史克公司。新加坡卫生部门25日深夜
-发布声明说，新加坡已暂停使用韩国采用的两款流感疫苗，其中就包括赛诺菲生产的VaxigripTetra流感疫苗。\u003c/p>\u003cp>然而，台湾防疫部门发言人庄
-人祥宣称，新加坡决定停打相关疫苗，原因尚待与新加坡确认，目前台湾没有考虑停打。陈时中竟回应台湾的流感疫苗不良反应报告比韩国少很多，并未证实韩国死亡
-事件的直接原因是接种流感疫苗。“最近传出这一例，则要先看医院处理的状况，已请医院提出报告。”针对疫苗，陈时中仅草草一句带过：“请赛诺菲回应各地相关的
-不良反应。”\u003c/p>\u003cp>\u003cimg class=\"empty_bg\" data-lazyload=\"https://x0.ifengimg.com/res/2020/A38C29D09F2FB5D
-DD06534AAC446EE14ECD2D7EE_size73_w686_h332.png\" src=\"data:image/gif;base64,R0lGODlhAQABAIAAAP\" style=\"background-co
-lor:#f2f2f2;padding-top:48.39650145772595%;\" />\u003c/p>\u003cp>岛内网友评论截图\u003c/p>\u003cp>“只是收集？还不先暂停施打？要
-等更多人出现问题吗？”岛内民众怒斥：“冷血官僚！”“请陈时中带头吃美猪与施打赛诺菲疫苗！”“这种阿Q心态，会不会太夸张了！”“叫别人（赛诺菲）回应，你自
-己不会去查吗？”“新加坡：与死亡无关，停用；台湾：与死亡无关，继续！你选择哪一个？”\u003c/p>"""
+    text = ''
     text = text.encode().decode()
-    import re
 
     # p = re.findall(r'(<img.*?/>)', text, re.DOTALL)
     # text = re.search(r'(<img.*/>)', text, re.DOTALL)
