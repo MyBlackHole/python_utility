@@ -82,10 +82,42 @@ def iteration_is_none(items):
         return True
 
 
+def get_mac() -> str:
+    """
+    获取 mac
+    Returns: str
+
+    """
+    try:
+        address = psutil.net_if_addrs()
+        p = re.findall(r"address='([0-9A-F]{2}-[0-9A-F]{2}-[0-9A-F]{2}-[0-9A-F]{2}-[0-9A-F]{2}-[0-9A-F]{2})'",
+                       str(address))
+        return p[0]
+    except Exception as e:
+        logger.exception(f" error：{e} ")
+        return get_uuid()
+
+
 def get_uuid() -> str:
+    """
+    获取 uuid
+    Returns: str
+
+    """
     uuid_str = str(uuid.uuid1())
     uuid_str = uuid_str.replace('-', '')
     return uuid_str
+
+
+def get_only() -> str:
+    """
+    获取 电脑唯一
+    Returns: str
+
+    """
+    uuid_str = str(uuid.uuid1())
+    only = uuid_str.split('-')[-1]
+    return only
 
 
 def get_uuid3(_str: str) -> str:
@@ -170,6 +202,14 @@ def datetime_init():
 
 
 def check_contain_chinese(content):
+    """
+    是否是包含字符串
+    Args:
+        content: 校验文本
+
+    Returns: bool
+
+    """
     for ch in content.encode('utf-8').decode('utf-8'):
         if u'\u4e00' <= ch <= u'\u9fff':
             return True
@@ -325,7 +365,6 @@ def fill_datetime(year, month, day, hour, minute, second):
     return '{0}-{1}-{2} {3}:{4}:{5}'.format(year, month, day, hour, minute, second)
 
 
-
 def can_json_encoder(old_obj):
     obj = old_obj
     if isinstance(obj, datetime):
@@ -405,16 +444,6 @@ def base_change_after(n: int, base: int):
         return int(after)
 
 
-def gmt_date(created_at):
-    try:
-        create_time = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(created_at, '%a %b %d %H:%M:%S %z %Y'))
-        create_time = datetime.strptime(create_time, '%Y-%m-%d %H:%M:%S')
-    except Exception as e:
-        logger.info(f"gmt_date error:{e}")
-        create_time = datetime.strptime('0001-01-01 00:00:00', '%Y-%m-%d %H:%M:%S')
-    return create_time
-
-
 def clean_dir(directory_path: Path):
     if not directory_path.is_dir():
         raise Exception(f"{directory_path.resolve()}不是目录")
@@ -427,14 +456,31 @@ def clean_file(file_path: Path):
     pass
 
 
-def pickle_load(name: str) -> object:
-    with open(name, 'rb') as f:
+def pickle_load(file_path: str) -> object:
+    """
+    反序列化到 python 对象
+    Args:
+        file_path: 路径文件
+
+    Returns: object
+
+    """
+    with open(file_path, 'rb') as f:
         obj = pickle.load(f)
     return obj
 
 
-def pickle_dump(name: str, obj: object):
-    with open(name, 'wb') as f:
+def pickle_dump(file_path: str, obj: object):
+    """
+    python 对象序列化到文件
+    Args:
+        file_path: 路径文件
+        obj: 对象
+
+    Returns: None
+
+    """
+    with open(file_path, 'wb') as f:
         pickle.dump(obj, file=f)
 
 
@@ -500,5 +546,5 @@ if __name__ == '__main__':
     # kill_pid(5)
     # kill_pid(22448)
     # print(get_now_datetime())
-    print(gmt_date("Thu Nov 26 13:16:15 +0800 2020"))
-    print(type(long_to_datetime("Thu Nov 26 13:16:15 +0800 2020")))
+    # print(type(long_to_datetime("Thu Nov 26 13:16:15 +0800 2020")))
+    pass
