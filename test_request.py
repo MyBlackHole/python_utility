@@ -21,7 +21,7 @@ from .bio_request import bio_get
 
 @pytest.mark.parametrize('url', ['http://httpbin.org/', 'https://www.google.com/'])
 def test_get(url):
-    results = bio_get(url)
+    results, err_status = bio_get(url)
     if results.success:
         print(results.resp.url)
     else:

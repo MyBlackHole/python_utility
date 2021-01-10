@@ -21,6 +21,7 @@ import math
 import os
 import pickle
 import re
+import signal
 import threading
 import time
 import uuid
@@ -35,15 +36,14 @@ from loguru import logger
 mutex = threading.Lock()
 
 
-def get_now_datetime():
-    return datetime.now().replace(microsecond=0)
-
-
 def str_is_none(text: str) -> bool:
     """
     判断 str 是否为 None 或 ''
-    :param text: str
-    :return: bool
+    Args:
+        text: str
+
+    Returns: bool
+
     """
     if text is None or text == '':
         return True
@@ -54,8 +54,11 @@ def str_is_none(text: str) -> bool:
 def str_to_int(string: [int, str]) -> int:
     """
     判断 string 是否是 int 类型
-    :param string: [int,str]
-    :return: int
+    Args:
+        string: [int, str]
+
+    Returns: int
+
     """
     try:
         if isinstance(string, int):
@@ -66,11 +69,14 @@ def str_to_int(string: [int, str]) -> int:
         return 0
 
 
-def iteration_is_none(items):
+def iteration_is_none(items: list) -> bool:
     """
     判断是否可迭代或为 None
-    :param items: 对象
-    :return: bool
+    Args:
+        items:
+
+    Returns: bool
+
     """
     try:
         if items is None or len(items) <= 0:
@@ -78,24 +84,19 @@ def iteration_is_none(items):
         else:
             return False
     except Exception as e:
-        logger.exception(f" error：{e} ")
+        logger.exception(f"error={e}")
         return True
 
 
 def get_mac() -> str:
     """
-    获取 mac
-    Returns: str
+
+    Returns: 'c55c6ea54831'
 
     """
-    try:
-        address = psutil.net_if_addrs()
-        p = re.findall(r"address='([0-9A-F]{2}-[0-9A-F]{2}-[0-9A-F]{2}-[0-9A-F]{2}-[0-9A-F]{2}-[0-9A-F]{2})'",
-                       str(address))
-        return p[0]
-    except Exception as e:
-        logger.exception(f" error：{e} ")
-        return get_uuid()
+    mac_bat = uuid.UUID(int=uuid.getnode()).hex[-12:]
+
+    return f"{mac_bat[0:2]}-{mac_bat[2:4]}-{mac_bat[4:6]}-{mac_bat[6:8]}-{mac_bat[8:10]}-{mac_bat[10:12]}"
 
 
 def get_uuid() -> str:
@@ -507,6 +508,15 @@ def get_list(name: str) -> list:
 
 
 def run_project(cmd: list, cwd: str = '.') -> int:
+    """
+    run project
+    Args:
+        cmd: run file path
+        cwd: run path
+
+    Returns: int
+
+    """
     return psutil.Popen([*cmd], cwd=cwd, creationflags=16).pid
 
 
@@ -515,23 +525,21 @@ def wait_pid_end(pid: int):
         time.sleep(3)
 
 
-def kill_pid(_pid):
+def kill_pid(_pid, status: bool = False):
+    """
+    kill program
+    Args:
+        _pid: pid
+        status: kill program group
+
+    Returns: None
+
+    """
     if _pid != 0:
-        os.system(f'taskkill /F /PID {_pid}')
-
-
-def git_clone(username: str, password: str, url: str, cwd: str = '..') -> int:
-    _url = re.search(r'://(.*)', url).group(1)
-    username = parse.quote(username)
-    password = parse.quote(password)
-    git_url = f'http://{username}:{password}@{_url}'
-    cmd = ['git', 'clone', git_url]
-    return run_project(cmd, cwd=cwd)
-
-
-def git_pull(cwd: str):
-    cmd = ['git', 'pull']
-    return run_project(cmd, cwd=cwd)
+        if status:
+            os.killpg(_pid, signal.SIGKILL)
+        else:
+            os.kill(_pid, signal.SIGKILL)
 
 
 if __name__ == '__main__':
@@ -547,4 +555,5 @@ if __name__ == '__main__':
     # kill_pid(22448)
     # print(get_now_datetime())
     # print(type(long_to_datetime("Thu Nov 26 13:16:15 +0800 2020")))
+    print(get_mac())
     pass

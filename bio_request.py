@@ -23,14 +23,14 @@ from .entity.results import Results
 
 
 def bio_get_check(url: str, check_str: str):
-    results = bio_get(url=url)
+    results, err_status = bio_get(url=url)
     resp = results.resp
     if check_str not in resp.text:
         raise Exception(f"text 不包含{check_str}")
     return resp.text
 
 
-def bio_post(url: str, **kwargs: dict) -> Results:
+def bio_post(url: str, **kwargs: dict) -> [Results, bool]:
     """
     post 重试封装
     :param url: 链接
@@ -38,7 +38,7 @@ def bio_post(url: str, **kwargs: dict) -> Results:
         requests.post 一致
         stop_max_attempt_number: 总重试时间
         stop_max_delay: 重试次数
-    :return: results 对象
+    :return: results 对象 bool
     """
     results = Results()
     try:
@@ -46,11 +46,11 @@ def bio_post(url: str, **kwargs: dict) -> Results:
         results.resp = resp
         results.success = True
     except Exception as e:
-        return exception(results=results, error=e, info=url)
-    return results
+        return exception(results=results, error=e, info=url), False
+    return results, True
 
 
-def bio_get(url: str, **kwargs: dict):
+def bio_get(url: str, **kwargs: dict) -> [Results, bool]:
     """
     get 重试封装
     :param url: 链接
@@ -66,8 +66,8 @@ def bio_get(url: str, **kwargs: dict):
         results.resp = resp
         results.success = True
     except Exception as e:
-        return exception(results=results, error=e, info=url)
-    return results
+        return exception(results=results, error=e, info=url), False
+    return results, True
 
 
 class Request:

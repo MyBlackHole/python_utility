@@ -24,13 +24,6 @@ from loguru import logger
 from opencc import opencc
 
 
-def get_uuid3(_str: str) -> str:
-    """
-    获取某关键字为基础的 uuid3
-    """
-    return str(uuid.uuid3(uuid.NAMESPACE_DNS, _str)).replace("-", "")
-
-
 def is_chinese(title):
     """
     检查标题是否包含中文

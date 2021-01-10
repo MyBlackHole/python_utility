@@ -20,7 +20,6 @@ from pathlib import Path
 
 def dumps_file(path: Path, data: [list, dict, str]):
     """
-    是否包含中文
     Args:
         path: 路径对象
         data: 路径对象
@@ -33,7 +32,6 @@ def dumps_file(path: Path, data: [list, dict, str]):
 
 def loads_file(path: Path) -> [list, dict, str]:
     """
-    是否包含中文
     Args:
         path: 路径对象
     Input: 'meta_search.json'
