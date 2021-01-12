@@ -109,7 +109,7 @@ def weibo_hash_code(content):
 def filter_content(content: str) -> str:
     # 清除url
     content = re.sub(r'(https?://|ftp://|file://|www\.)[-A-Za-z0-9+&@#/%?=~_|!:,.; ]+[-A-Za-z0-9+&@#/%=~_|]', '',
-                     content)
+                     content.encode().decode())
     # 去掉话题 ---- ##
     content = re.sub(r'#.*?#', '', content)
 

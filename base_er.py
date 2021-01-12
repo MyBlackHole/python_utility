@@ -14,7 +14,7 @@
 
 __author__ = 'Black Hole'
 
-from pymysql import ProgrammingError
+from loguru import logger
 from requests.exceptions import ReadTimeout, ConnectionError, RequestException
 from retrying import RetryError
 
@@ -22,35 +22,42 @@ from .entity.results import Results
 
 
 def exception(results: Results, error, info):
-    if isinstance(error, ProgrammingError):
-        results.info = info
-        results.error = {error.args}
-        raise Exception(results.json())
-    elif isinstance(error, LogException):
+    # if isinstance(error, ProgrammingError):
+    #     results.info = info
+    #     results.error = {error.args}
+    #     logger.info(f"{results.json()}")
+    #     return f"{results.json()}"
+    if isinstance(error, LogException):
         results.error = error.body
         results.status_code = error.status_code
         results.info = error.url
-        return results
+        logger.info(f"{results.json()}")
+        return f"{results.json()}"
     elif isinstance(error, RetryError):
         results.info = info
         results.error = {error.args}
-        return results
+        logger.info(f"{results.json()}")
+        return f"{results.json()}"
     elif isinstance(error, ReadTimeout):
         info = f'{info} Timeout'
         results.error = info
-        raise Exception(results.json())
+        logger.info(f"{results.json()}")
+        return f"{results.json()}"
     elif isinstance(error, ConnectionError):
         info = f'{info} Connection error'
         results.error = info
-        raise Exception(results.dict())
+        logger.info(f"{results.json()}")
+        return f"{results.json()}"
     elif isinstance(error, RequestException):
         info = f'{info} Error'
         results.error = info
-        raise Exception(results.json())
+        logger.info(f"{results.json()}")
+        return f"{results.json()}"
     else:
         results.info = info
         results.error = {error.args}
-        raise Exception(results.json())
+        logger.info(f"{results.json()}")
+        return f"{results.json()}"
 
 
 class LogException(Exception):

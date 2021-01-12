@@ -105,6 +105,18 @@ def chinese_to_gmt(chinese_time: str) -> datetime:
     return arrow.get(chinese_time, 'ddd MMM DD HH:mm:ss Z YYYY', tzinfo='local').naive
 
 
+def gmt_to_datetime(gmt_str: str) -> datetime:
+    """
+    格林时间 datetime
+    Args:
+        gmt_str: 中国时间
+    Input: Thu Nov 26 13:16:15 +0800 2020
+    Returns: 2020-11-26 13:16:15
+    Class: <class 'datetime.datetime'>
+    """
+    return arrow.get(gmt_str, 'YYYY-MM-DD HH:mm:ss', tzinfo='local').naive
+
+
 def chinese_to_timestamp10(chinese_time: str) -> int:
     """
     中国时间转 10 位时间戳
@@ -135,5 +147,6 @@ def print_type(obj: object):
 
 
 if __name__ == '__main__':
-    print_type(chinese_to_gmt('Thu Nov 26 13:16:15 +0800 2020'))
+    # print_type(chinese_to_gmt('Mon May 04 11:00:49 +0800 2020'))
+    print_type(gmt_to_datetime("2020-11-26 13:16:15"))
     pass
