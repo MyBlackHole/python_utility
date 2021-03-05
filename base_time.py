@@ -169,4 +169,6 @@ def print_type(obj: object):
 if __name__ == '__main__':
     print_type(chinese_to_gmt('Wed Mar 11 13:57:56 +0800 2020'))
     # print_type(gmt_to_datetime("2020-11-26 13:16:15"))
+    # print_type(chinese_to_gmt('Mon May 04 11:00:49 +0800 2020'))
+    print_type(gmt_to_datetime("2020-11-26 13:16:15"))
     pass
