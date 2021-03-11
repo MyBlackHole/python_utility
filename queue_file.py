@@ -28,9 +28,9 @@ class QueueFile(object):
     q = Queue()
     status = False
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls):
         if not cls.operate:
-            cls.operate = object.__new__(cls, *args, **kwargs)
+            cls.operate = object.__new__(cls)
         return cls.operate
 
     def __init__(self):

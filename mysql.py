@@ -58,9 +58,9 @@ class MySQLManage(object):
         self.stop_max_delay = stop_max_delay
         self.wait_fixed = wait_fixed
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls):
         if cls.mysql_utility is None:
-            cls.mysql_utility = object.__new__(cls, *args, **kwargs)
+            cls.mysql_utility = object.__new__(cls)
         return cls.mysql_utility
 
     def select(self, sql: str, conn=None, cursor=None, database_info=None):
