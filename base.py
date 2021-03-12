@@ -24,6 +24,7 @@ import re
 import signal
 import threading
 import time
+from typing import Union
 import uuid
 from datetime import datetime, date
 from pathlib import Path
@@ -52,7 +53,7 @@ def str_is_none(text: str) -> bool:
         return False
 
 
-def str_to_int(string: [int, str]) -> int:
+def str_to_int(string: Union[int, str]) -> int:
     """
     判断 string 是否是 int 类型
     Args:
@@ -494,7 +495,7 @@ def delete_dict_none(_dict: dict) -> dict:
     return _dict
 
 
-def read_text(file: str, mode: str = 'r', encoding: str = 'utf-8') -> [str, bytes]:
+def read_text(file: str, mode: str = 'r', encoding: str = 'utf-8') -> Union[str, bytes]:
     with open(file, mode, encoding=encoding) as f:
         text = f.read()
     return text

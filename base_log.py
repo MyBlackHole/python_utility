@@ -17,7 +17,7 @@ __author__ = 'Black Hole'
 
 from loguru import logger
 
-from .etc.conf import BaseConfig
+from .config.conf import BaseConfig
 
 
 class Log(object):

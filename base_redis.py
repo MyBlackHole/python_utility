@@ -21,7 +21,7 @@ from pydantic import BaseModel
 from redis import ConnectionPool, Redis
 
 from .base import base_change_after
-from .etc.conf import BaseConfig
+from .config.conf import BaseConfig
 
 
 class RedisSelect(BaseModel):

@@ -19,7 +19,7 @@ import pymysql
 from retrying import retry
 
 from .base import iteration_is_none
-from .etc.conf import BaseConfig
+from .config.conf import BaseConfig
 
 
 def mysql_decorator(func):

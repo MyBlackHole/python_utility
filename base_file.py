@@ -16,9 +16,10 @@ __author__ = 'Black Hole'
 
 import json
 from pathlib import Path
+from typing import Union
 
 
-def dumps_file(path: Path, data: [list, dict, str]):
+def dumps_file(path: Path, data: Union[list, dict]):
     """
     Args:
         path: 路径对象
@@ -30,7 +31,7 @@ def dumps_file(path: Path, data: [list, dict, str]):
         f.write(json.dumps(data, ensure_ascii=False))
 
 
-def loads_file(path: Path) -> [list, dict, str]:
+def loads_file(path: Path) -> Union[list, dict]:
     """
     Args:
         path: 路径对象
