@@ -21,6 +21,15 @@ from urllib.parse import urljoin
 from loguru import logger
 
 
+ 
+def validate_title(name:str, repl:str = '_') -> str:
+    """
+    替换无法作为文件名的符号
+    """
+    fil = re.compile(u'[^0-9a-zA-Z\u4e00-\u9fa5.，,。？“”]+', re.UNICODE)
+    return fil.sub(repl, name) 
+
+
 def key_split(_list: list, base_sep: str = '+', sep_list: list = [',', '+', ' ', '＋']) -> list:
     """
     分割字符串列表
