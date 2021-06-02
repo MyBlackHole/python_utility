@@ -19,6 +19,28 @@ from datetime import datetime
 import arrow
 
 
+def get_now_YM() -> str:
+    """
+    获取当前月份字符串
+
+    Return: '2020-05'
+    Class: <class 'str'>
+    """
+    return arrow.now().format("YYYY-MM")
+
+
+def gmt_to_YM(gmt_str:str) -> datetime:
+    """
+    格林时间 datetime
+    Args:
+        gmt_str: 中国时间
+    Input: 2020-11
+    Return: 2020-11-24 14:51:32.589053+08:00
+    Class: <class 'datetime.datetime'>
+    """
+    return arrow.get(gmt_str, 'YYYY-MM', tzinfo='local').naive
+
+
 def get_now_str_date() -> str:
     """
     获取当前时间字符串
