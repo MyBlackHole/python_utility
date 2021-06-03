@@ -19,6 +19,13 @@ from datetime import datetime
 import arrow
 
 
+def get_shift_datetime(**kw):
+    """
+    获取差距时间
+    """
+    return arrow.now().shift(**kw).naive
+
+
 def get_now_YM() -> str:
     """
     获取当前月份字符串
